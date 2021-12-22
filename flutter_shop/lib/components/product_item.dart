@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import '../utils/app_routes.dart';
+import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
+import '../utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
-  final Product product;
-  const ProductItem({Key? key, required this.product}) : super(key: key);
+  const ProductItem({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Product>(context);
     //cortar de forma arrondada um determinado elemento
     //pode ser todos os lados ou apenas um que queira
     return ClipRRect(
@@ -34,8 +37,12 @@ class ProductItem extends StatelessWidget {
           leading: IconButton(
             iconSize: 20,
             color: Theme.of(context).colorScheme.secondary,
-            onPressed: () {},
-            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              product.toggleFavorite();
+            },
+            icon: Icon(product.isFavorite
+                ? Icons.favorite
+                : Icons.favorite_border_outlined),
           ),
           trailing: IconButton(
             iconSize: 20,

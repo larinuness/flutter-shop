@@ -13,6 +13,7 @@ class ProductDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
+        elevation: 0,
       ),
     );
   }
