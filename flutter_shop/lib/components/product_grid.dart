@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../models/product_list.dart';
 import '../models/product_model.dart';
 import 'product_item.dart';
 
 class ProductGrid extends StatelessWidget {
-  const ProductGrid({Key? key}) : super(key: key);
+  final bool showFavoriteOnly;
+  const ProductGrid({Key? key, required this.showFavoriteOnly})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProductList>(context);
-    final List<Product> loadedProducts = provider.items;
+    final provider = Provider.of<ProductList>(context, listen: false);
+    final List<Product> loadedProducts =
+        showFavoriteOnly ? provider.favoriteItems : provider.items;
     return GridView.builder(
       //quantidade que vai ter no grid
       itemCount: loadedProducts.length,
@@ -26,9 +28,12 @@ class ProductGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
-        return ChangeNotifierProvider(
-          create: (_) => loadedProducts[index],
-          child: ProductItem(),
+        //.value pra ja existe um valor
+        //sem value, está criando um do 0
+        return ChangeNotifierProvider.value(
+          //usa os produtos que já foram criados
+          value: loadedProducts[index],
+          child: const ProductItem(),
         );
       },
     );

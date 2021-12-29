@@ -11,7 +11,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context);
+    //listen false pq o Consumer que vai ficar com true
+    final product = Provider.of<Product>(context, listen: false);
     //cortar de forma arrondada um determinado elemento
     //pode ser todos os lados ou apenas um que queira
     return ClipRRect(
@@ -29,20 +30,34 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           title: Text(
-            product.title,
+            product.name,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 12),
           ),
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            iconSize: 20,
-            color: Theme.of(context).colorScheme.secondary,
-            onPressed: () {
-              product.toggleFavorite();
-            },
-            icon: Icon(product.isFavorite
-                ? Icons.favorite
-                : Icons.favorite_border_outlined),
+          //com o Consumer, listen fica apenas no icon(que é onde muda)
+          leading: Consumer<Product>(
+            //no child fica renderiza algo que nunca vai mudar, fixo
+            //chama através do builder
+            // child: Column(
+            //   children: [
+
+            //   ],
+            // ),
+            //se usar o child trocar o "_" por "child"
+            builder: (context, product, _) => IconButton(
+              //exemplo se fosse usar o child do Consumer
+              //body: child,
+              iconSize: 20,
+              color: Theme.of(context).colorScheme.secondary,
+              onPressed: () {
+                //função pra settar como fav ou não
+                product.toggleFavorite();
+              },
+              icon: Icon(product.isFavorite
+                  ? Icons.favorite
+                  : Icons.favorite_border_outlined),
+            ),
           ),
           trailing: IconButton(
             iconSize: 20,
