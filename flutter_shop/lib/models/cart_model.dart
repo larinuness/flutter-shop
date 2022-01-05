@@ -6,6 +6,9 @@ import 'cart_item_model.dart';
 import 'product_model.dart';
 
 class Cart with ChangeNotifier {
+  //_items = pedido, está como map
+  //String seria o id, e CartItem seria o produto
+  //então, pedido do id 1 tem tal produto(s)
   Map<String, CartItem> _items = {};
   Map<String, CartItem> get items {
     return {..._items};
@@ -18,13 +21,14 @@ class Cart with ChangeNotifier {
   //quantidade total do carrinho(preço)
   double get totalCart {
     double total = 0.0;
-    //pra cada elemento pega o preço e multiplica pela quantidade
+    //pra cada elemento(produto) pega o preço e multiplica pela quantidade
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
   }
-
+  
+  //function de add um produto do carrinho
   void addItem(Product product) {
     //checa se já existe o produto no carrrinho
     if (_items.containsKey(product.id)) {
@@ -42,6 +46,7 @@ class Cart with ChangeNotifier {
       );
       //se não tiver ja no carrinho, insere como um novo
     } else {
+      //colocar se estiver sem nada do tipo
       _items.putIfAbsent(
           product.id,
           () => CartItem(

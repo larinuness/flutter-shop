@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/cart_model.dart';
 import '../models/product_model.dart';
 import '../utils/app_routes.dart';
 
@@ -13,6 +14,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //listen false pq o Consumer que vai ficar com true
     final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     //cortar de forma arrondada um determinado elemento
     //pode ser todos os lados ou apenas um que queira
     return ClipRRect(
@@ -61,7 +63,9 @@ class ProductItem extends StatelessWidget {
           ),
           trailing: IconButton(
             iconSize: 20,
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product);
+            },
             icon: const Icon(Icons.shopping_cart),
           ),
         ),
