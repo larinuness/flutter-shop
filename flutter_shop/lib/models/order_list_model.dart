@@ -6,7 +6,7 @@ import 'order_model.dart';
 import 'cart_model.dart';
 
 class OrderList with ChangeNotifier {
-  List<Order> _items = [];
+  final List<Order> _items = [];
 
   //retorna clone de _items
   List<Order> get items => [..._items];

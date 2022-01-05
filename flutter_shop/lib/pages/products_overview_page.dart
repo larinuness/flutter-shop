@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/components/app_drawer.dart';
 import '../utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         centerTitle: true,
         actions: [
           PopupMenuButton(
-            icon: const Icon(Icons.menu_outlined),
+            icon: const Icon(Icons.more_vert),
             itemBuilder: (_) => [
               const PopupMenuItem(
                 child: Text('Somente favoritos'),
@@ -72,6 +73,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           showFavoriteOnly: _showFavoriteOnly,
         ),
       ),
+      drawer: const AppDrawer(),
     );
   }
 }

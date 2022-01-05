@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/utils/app_routes.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -10,9 +11,26 @@ class AppDrawer extends StatelessWidget {
         children: [
           AppBar(
             title: const Text('Bem vindo Usuário'),
+            elevation: 0,
+            //tira o icon de dentro do drawer do drawer hahaha
+            automaticallyImplyLeading: false,
           ),
           const Divider(),
-          ListTile()
+          ListTile(
+            leading: const Icon(Icons.shop),
+            title: const Text('Loja'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+            },
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.payment),
+            title: const Text('Pedidos'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, AppRoutes.orders);
+            },
+          ),
         ],
       ),
     );

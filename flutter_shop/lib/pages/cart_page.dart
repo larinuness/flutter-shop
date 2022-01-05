@@ -49,7 +49,7 @@ class CartPage extends StatelessWidget {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      //add os items no pedido
+                      //add os items(produtos) no pedido
                       Provider.of<OrderList>(context, listen: false)
                           .addOrder(cart);
                       //limpa carrinho
