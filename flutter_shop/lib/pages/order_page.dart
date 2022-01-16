@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/components/order_item.dart';
-import 'package:flutter_shop/models/order_list_model.dart';
+import '../components/order_item.dart';
+import '../models/order_list_model.dart';
 import 'package:provider/provider.dart';
 import '../components/app_drawer.dart';
 

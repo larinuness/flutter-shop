@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product_list_model.dart';
 import '../models/product_model.dart';
-import 'product_item.dart';
+import 'product_grid_item.dart';
 
 class ProductGrid extends StatelessWidget {
   final bool showFavoriteOnly;
@@ -33,7 +33,7 @@ class ProductGrid extends StatelessWidget {
         return ChangeNotifierProvider.value(
           //usa os produtos que já foram criados
           value: loadedProducts[index],
-          child: const ProductItem(),
+          child: const ProductGridtItem(),
         );
       },
     );

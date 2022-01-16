@@ -27,7 +27,7 @@ class Cart with ChangeNotifier {
     });
     return total;
   }
-  
+
   //function de add um produto do carrinho
   void addItem(Product product) {
     //checa se já existe o produto no carrrinho
@@ -60,8 +60,34 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  //remove o item inteiro
   void removeItem(String productId) {
     _items.remove(productId);
+    notifyListeners();
+  }
+
+  //remove apenas um item
+  void removeSingleItem(String productId) {
+    //checa se tem o produto dentro da lista de produtos
+    //não faz nenhuma ação
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    //se quantidade for igual a 1 remove o item inteiro
+    if (_items[productId]?.quantity == 1) {
+      _items.remove(productId);
+      // se for maior que 1 remove apenas o ultimo que foi adicionado
+    } else {
+      _items.update(
+        productId,
+        (itemExistent) => CartItem(
+            id: itemExistent.id,
+            productId: itemExistent.productId,
+            name: itemExistent.name,
+            quantity: itemExistent.quantity - 1,
+            price: itemExistent.price),
+      );
+    }
     notifyListeners();
   }
 

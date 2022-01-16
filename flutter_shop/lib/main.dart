@@ -7,6 +7,8 @@ import 'models/product_list_model.dart';
 import 'pages/cart_page.dart';
 import 'pages/order_page.dart';
 import 'pages/product_detail_page.dart';
+import 'pages/product_form_page.dart';
+import 'pages/products_page.dart';
 import 'pages/products_overview_page.dart';
 import 'utils/app_routes.dart';
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
           create: (_) => Cart(),
         ),
         ChangeNotifierProvider(
-          //cria um pedidopz
+          //cria um pedidop
           create: (_) => OrderList(),
         ),
       ],
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
           AppRoutes.cart: (context) => const CartPage(),
           AppRoutes.home: (context) => const ProductsOverviewPage(),
           AppRoutes.orders: (context) => const OrderPage(),
+          AppRoutes.products: (context) => const ProductsPage(),
+          AppRoutes.productsForm: (context) => const ProductFormPage(),
         },
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/components/app_drawer.dart';
+import '../components/app_drawer.dart';
 import '../utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -47,8 +47,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                   } else {
                     _showFavoriteOnly = false;
                   }
-                  // ignore: avoid_print
-                  print(_showFavoriteOnly);
                 },
               );
             },

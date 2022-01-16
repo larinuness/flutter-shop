@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/models/order_model.dart';
+import '../models/order_model.dart';
 import 'package:intl/intl.dart';
 
 //stateful pra expander os detalhes
