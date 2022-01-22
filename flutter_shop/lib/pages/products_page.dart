@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop/utils/app_routes.dart';
+import '../utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
 import '../components/app_drawer.dart';
@@ -14,14 +14,14 @@ class ProductsPage extends StatelessWidget {
     final ProductList products = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gerenciar produtos'),
+        title: const Text('Gerenciar Produtos'),
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.productsForm);
-            },
             icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.productsForm);
+            },
           ),
         ],
       ),
@@ -29,15 +29,15 @@ class ProductsPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ProductItem(product: products.items[index]),
-                const Divider(),
-              ],
-            );
-          },
+          itemCount: products.itemsCount,
+          itemBuilder: (ctx, i) => Column(
+            children: [
+              ProductItem(
+                product: products.items[i],
+              ),
+              const Divider(),
+            ],
+          ),
         ),
       ),
     );

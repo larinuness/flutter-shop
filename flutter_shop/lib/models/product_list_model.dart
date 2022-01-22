@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'product_model.dart';
 
@@ -11,6 +13,9 @@ class ProductList with ChangeNotifier {
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
+  int get itemsCount {
+    return _items.length;
+  }
   // bool _showFavoriteOnly = false;
 
   // //retorna um clone de items(nova lista) pra não ter acesso
@@ -33,6 +38,45 @@ class ProductList with ChangeNotifier {
   //   _showFavoriteOnly = false;
   //   notifyListeners();
   // }
+  
+  //criar um produto novo através do form
+  void saveProduct(Map<String, Object> data) {
+    bool hasId = data['id'] != null;
+
+    final product = Product(
+      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
+      name: data['name'] as String,
+      description: data['description'] as String,
+      price: data['price'] as double,
+      imageUrl: data['imageUrl'] as String,
+    );
+
+    if (hasId) {
+      updateProduct(product);
+    } else {
+      addProduct(product);
+    }
+  }
+  
+  //editar um produto
+  updateProduct(Product product) {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items[index] = product;
+      notifyListeners();
+    }
+  }
+
+  //deleta um produto
+  removeProduct(Product product) {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items.removeWhere((p) => p.id == product.id);
+      notifyListeners();
+    }
+  }
 
   //add produto
   void addProduct(Product product) {

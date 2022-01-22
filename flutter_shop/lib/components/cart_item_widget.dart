@@ -33,25 +33,26 @@ class CarItemWidget extends StatelessWidget {
       confirmDismiss: (_) {
         //Do tipo future pq não sabe quando tempo vai demorar pra ter resposta
         return showDialog<bool>(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  title: const Text('Tem certeza?'),
-                  content: const Text('Deseja remover o item do carrinho?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(false);
-                      },
-                      child: const Text('Não'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                      },
-                      child: const Text('Sim'),
-                    ),
-                  ],
-                ));
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Tem certeza?'),
+            content: const Text('Deseja remover o item do carrinho?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('Não'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Sim'),
+              ),
+            ],
+          ),
+        );
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
