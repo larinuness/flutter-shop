@@ -34,7 +34,7 @@ class CartPage extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  //widget pra por valores
+                  //Widget que serve pra valores, deixa mais bonito
                   Chip(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(

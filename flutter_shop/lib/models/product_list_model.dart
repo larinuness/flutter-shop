@@ -9,10 +9,16 @@ import '../data/dummy_data.dart';
 //NotifyListeners avisa que teve mudança
 class ProductList with ChangeNotifier {
   final List<Product> _items = dummyProducts;
-
+  
+  //retorna um clone de items(nova lista) pra não ter acesso
+  //direto ao _items
   List<Product> get items => [..._items];
+
+  //retorna a lista apenas com os produtos favoritos
   List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
+
+  //pega a quandiade de items    
   int get itemsCount {
     return _items.length;
   }

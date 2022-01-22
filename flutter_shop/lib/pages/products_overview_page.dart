@@ -27,6 +27,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         elevation: 0,
         centerTitle: true,
         actions: [
+          //deixa a AppBar com um navbar pequeno
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
             itemBuilder: (_) => [

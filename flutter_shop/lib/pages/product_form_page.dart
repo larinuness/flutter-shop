@@ -12,7 +12,6 @@ class ProductFormPage extends StatefulWidget {
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
-
   final _priceFocus = FocusNode();
   final _descriptionFocus = FocusNode();
   final _imageUrlFocus = FocusNode();
@@ -42,7 +41,6 @@ class _ProductFormPageState extends State<ProductFormPage> {
         _formData['price'] = product.price;
         _formData['description'] = product.description;
         _formData['imageUrl'] = product.imageUrl;
-
         _imageUrlController.text = product.imageUrl;
       }
     }
@@ -53,7 +51,6 @@ class _ProductFormPageState extends State<ProductFormPage> {
     super.dispose();
     _priceFocus.dispose();
     _descriptionFocus.dispose();
-
     _imageUrlFocus.removeListener(updateImage);
     _imageUrlFocus.dispose();
   }
@@ -98,12 +95,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
           child: ListView(
             children: [
               TextFormField(
-                //se vier da rota de edição vem com valor inital proprio se não vem vazio
+                //se vier da rota de edição vem com valor initial proprio se não vem vazio
                 initialValue: _formData['name']?.toString(),
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
                 textInputAction: TextInputAction.next,
+                //passa o foco pro proximo field, no caso o preço
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocus);
                 },
@@ -123,7 +121,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 },
               ),
               TextFormField(
-                //se vier da rota de edição vem com valor inital proprio se não vem vazio
+                //se vier da rota de edição vem com valor initial proprio se não vem vazio
                 initialValue: _formData['price']?.toString(),
                 decoration: const InputDecoration(labelText: 'Preço'),
                 textInputAction: TextInputAction.next,
@@ -131,7 +129,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                //passa o foco pro proximo field, no caso a descricao
+                //passa o foco pro proximo field, no caso a descrição
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocus);
                 },
@@ -149,7 +147,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 },
               ),
               TextFormField(
-                //se vier da rota de edição vem com valor inital proprio se não vem vazio
+                //se vier da rota de edição vem com valor initial proprio se não vem vazio
                 initialValue: _formData['description']?.toString(),
                 decoration: const InputDecoration(labelText: 'Descrição'),
                 textInputAction: TextInputAction.next,
@@ -177,7 +175,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      //se vier da rota de edição vem com valor inital proprio se não vem vazio
+                      //se vier da rota de edição vem com valor initial proprio se não vem vazio
                       decoration:
                           const InputDecoration(labelText: 'Url da Imagem'),
                       keyboardType: TextInputType.url,
