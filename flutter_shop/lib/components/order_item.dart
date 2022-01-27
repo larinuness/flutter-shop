@@ -50,7 +50,7 @@ class _OrderItemState extends State<OrderItem> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${product.quantity} x R\$ ${product.price}',
+                        '${product.quantity} x R\$ ${product.price.toStringAsFixed(2).replaceAll('.', ',')}',
                         style: TextStyle(fontSize: 18, color: Colors.grey[800]),
                       )
                     ],

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/product_model.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  const ProductDetailPage({
+  ProductDetailPage({
     Key? key,
   }) : super(key: key);
+
+  final formatacaoReal = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class ProductDetailPage extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'R\$ ${product.price.toStringAsFixed(2).replaceAll('.', ',')}',
+                formatacaoReal.format(product.price),
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.primary, fontSize: 20),
               ),
