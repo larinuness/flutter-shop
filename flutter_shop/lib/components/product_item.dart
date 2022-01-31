@@ -11,6 +11,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final msg = ScaffoldMessenger.of(context);
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(product.imageUrl),
@@ -36,21 +37,28 @@ class ProductItem extends StatelessWidget {
                       content: const Text('Deseja remover o item do carrinho?'),
                       actions: [
                         TextButton(
-                          onPressed: () {
-                            Navigator.of(ctx).pop();
-                          },
+                          onPressed: () => Navigator.of(ctx).pop(false),
                           child: const Text('Não'),
                         ),
                         TextButton(
-                          onPressed: () {
-                            Provider.of<ProductList>(context, listen: false)
-                                .removeProduct(product);
-                            Navigator.of(ctx).pop();
-                          },
+                          onPressed: () => Navigator.of(ctx).pop(true),
                           child: const Text('Sim'),
                         ),
                       ],
                     ),
+                  ).then(
+                    (value) async {
+                      if (value ?? false) {
+                        try {
+                          await Provider.of<ProductList>(context, listen: false)
+                              .removeProduct(product);
+                        } catch (e) {
+                          msg.showSnackBar(SnackBar(
+                            content: Text(e.toString()),
+                          ));
+                        }
+                      }
+                    },
                   );
                 },
                 icon: Icon(Icons.delete, color: Theme.of(context).errorColor)),

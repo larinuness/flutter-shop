@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/order_model.dart';
 import 'package:intl/intl.dart';
+
+import '../models/order_model.dart';
 
 //stateful pra expander os detalhes
 class OrderItem extends StatefulWidget {
@@ -12,6 +13,7 @@ class OrderItem extends StatefulWidget {
 }
 
 class _OrderItemState extends State<OrderItem> {
+  final formatacaoReal = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   bool _expanded = false;
   @override
   Widget build(BuildContext context) {
@@ -19,8 +21,7 @@ class _OrderItemState extends State<OrderItem> {
       child: Column(
         children: [
           ListTile(
-            title: Text(
-                'R\$ ${widget.order.total.toStringAsFixed(2).replaceAll('.', ',')}'),
+            title: Text(formatacaoReal.format(widget.order.total)),
             subtitle: Text(
               DateFormat('dd/MM/yyyy HH:mm').format(widget.order.date),
             ),
@@ -50,7 +51,8 @@ class _OrderItemState extends State<OrderItem> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '${product.quantity} x R\$ ${product.price.toStringAsFixed(2).replaceAll('.', ',')}',
+                        '${product.quantity} x ' +
+                            formatacaoReal.format(product.price),
                         style: TextStyle(fontSize: 18, color: Colors.grey[800]),
                       )
                     ],

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import '../exceptions/http_exception.dart';
+import '../utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'product_model.dart';
 
@@ -9,8 +11,6 @@ import 'product_model.dart';
 //NotifyListeners avisa que teve mudança
 class ProductList with ChangeNotifier {
   final List<Product> _items = [];
-  final _baseUrl =
-      'https://shop-cod3r-flutter-default-rtdb.firebaseio.com/products';
 
   //retorna um clone de items(nova lista) pra não ter acesso
   //direto ao _items
@@ -67,10 +67,23 @@ class ProductList with ChangeNotifier {
   }
 
   //editar um produto
-  Future<void> updateProduct(Product product) {
+  Future<void> updateProduct(Product product) async {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
+      await http.patch(
+        Uri.parse('${Constants.productsUrl}/${product.id}.json'),
+        //json.encode converte o produto pra um json
+        //passa um Map
+        body: json.encode(
+          {
+            "name": product.name,
+            "description": product.description,
+            "price": product.price,
+            "imageUrl": product.imageUrl,
+          },
+        ),
+      );
       _items[index] = product;
       notifyListeners();
     }
@@ -79,12 +92,29 @@ class ProductList with ChangeNotifier {
   }
 
   //deleta um produto
-  removeProduct(Product product) {
+  Future<void> removeProduct(Product product) async {
     int index = _items.indexWhere((p) => p.id == product.id);
 
+    //primeiro exclui local
     if (index >= 0) {
-      _items.removeWhere((p) => p.id == product.id);
+      final product = _items[index];
+      _items.remove(product);
       notifyListeners();
+
+      //depois excluir do server
+      final response = await http.delete(
+        Uri.parse('${Constants.productsUrl}/${product.id}.json'),
+      );
+      //se houver erro do lado do servidor quanto do cliente
+      //o produto volta pra lista
+      if (response.statusCode >= 400) {
+        _items.insert(index, product);
+        notifyListeners();
+        throw HttpException(
+            msg:
+                'Não foi possivel excluir o produto. Tente novamente mais tarde',
+            statusCode: response.statusCode);
+      }
     }
   }
 
@@ -92,7 +122,7 @@ class ProductList with ChangeNotifier {
   Future<void> loadProduct() async {
     _items.clear();
     final response = await http.get(
-      Uri.parse('$_baseUrl.json'),
+      Uri.parse('${Constants.productsUrl}.json'),
     );
     //se for nulo não retorna nada
     // ignore: avoid_returning_null_for_void, unnecessary_null_comparison
@@ -118,7 +148,7 @@ class ProductList with ChangeNotifier {
   Future<void> addProduct(Product product) async {
     //no Realtime do firebase tem que terminar com .json
     final response = await http.post(
-      Uri.parse('$_baseUrl.json'),
+      Uri.parse('${Constants.productsUrl}.json'),
       //json.encode converte o produto pra um json
       //passa um Map
       body: json.encode(
